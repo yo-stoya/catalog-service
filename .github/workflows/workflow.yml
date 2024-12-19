@@ -1,0 +1,23 @@
+name: Commit Stage
+on: push
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4.2.2
+      - name: Set JDK
+        uses: actions/setup-java@v4.6.0
+        with:
+          distribution: 'corretto'
+          java-version: 21
+          cache: gradle
+      - name: Build and run tests
+        run: |
+          chmod +x gradlew 
+          ./gradlew build
